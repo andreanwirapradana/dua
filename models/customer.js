@@ -11,10 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Customer.hasMany(models.Account)
     }
   };
   Customer.init({
-    identityNumber: DataTypes.STRING,
+    identityNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Identity Number must be filled'
+        },
+        len: {
+          args: [16, 20],
+          msg: 'Identity Number minimum 16 characters and maximum 20 characters'
+        }
+      }
+    },
     fullName: DataTypes.STRING,
     address: DataTypes.STRING,
     birthDate: DataTypes.DATE,

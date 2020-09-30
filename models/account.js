@@ -15,7 +15,15 @@ module.exports = (sequelize, DataTypes) => {
   };
   Account.init({
     type: DataTypes.STRING,
-    balance: DataTypes.FLOAT,
+    balance: {
+      type: DataTypes.FLOAT,
+      validate: {
+        min: {
+          args: 500000,
+          msg: 'Minimum balance for new Account: Rp.500.000'
+        }
+      }
+    },
     accountNumber: DataTypes.STRING
   }, {
     sequelize,
